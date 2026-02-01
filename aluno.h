@@ -5,7 +5,7 @@
 #define MAX_ESPERA 50
 #define MAX_HISTORICO 50
 
-#define ID_NULA -1
+#define ID_NULO -1
 #define TAM_NULO -1
 
 typedef struct {
@@ -60,11 +60,10 @@ Aluno pop_fila_espera(Fila_espera *turma_espera);
 int push_pilha_historico(Pilha_historico *turma_historico, Aluno aluno);
 Aluno pop_pilha_historico(Pilha_historico *turma_historico);
 
-
-// recuperar um aluno que foi apagado
+// recuperar o ultimo aluno que foi apagado
 int recuperar_historico_aluno(Lista_turma *turma, Pilha_historico *historico);
 
-// colocar um aluno da lista de espera para dentro da turma
+// colocar o primeiro aluno da fila de espera para dentro da turma
 int sair_espera_aluno(Lista_turma *turma, Fila_espera *espera);
 
 #endif
