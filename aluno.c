@@ -55,3 +55,16 @@ int recuperar_historico_aluno(Lista_turma *turma, Pilha_historico *historico) {
 
     return 1; // aluno recuperado
 }
+
+int sair_espera_aluno(Lista_turma *turma, Fila_espera *espera) {
+    Aluno aluno = pop_fila_espera(espera);
+    turma->alunos[turma->tam_lista++] = aluno;
+
+        // if(espera->tam_fila == 0) return 0; // lista de espera vazia. deixando de comentário para lembrar de fazer a verificação do tamanho
+    //                                                             antes de executar essa função de espera
+
+    // if(turma->tam_lista == MAX_ALUNOS) return 2; // turma cheia. deixando de comentário para lembrar de fazer a verificação do tamanho
+    //                                                              antes de executar essa função de espera
+
+    return 1; // aluno enviado para a turma
+}
