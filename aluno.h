@@ -40,7 +40,8 @@ void limpar_buffer_entrada();
 int verificar_id(int id);
 int verificar_idade(int idade);
 int verificar_nome(char *nome);
-Aluno buscar_aluno(Lista_turma turma, int id);
+Aluno buscar_aluno_id(Lista_turma turma, int id);
+int buscar_aluno_nome(Lista_turma turma, char *nome);
 
 // funções de criar
 int criar_lista_turma(Lista_turma *turma);

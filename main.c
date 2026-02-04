@@ -4,6 +4,8 @@
 #include "aluno.h"
 
 int main() {
+    Lista_turma *turmas;
+
 
     return 0;
 }

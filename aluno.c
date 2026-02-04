@@ -8,7 +8,13 @@ void limpar_buffer_entrada() {
     while((c = getchar()) != '\n' && c != EOF);
 }
 
-Aluno buscar_aluno(Lista_turma turma, int id) {
+void print_aluno(Aluno aluno) {
+    printf("nome: %s\n", aluno.nome);
+    printf("matricula: %d\n", aluno.id);
+    printf("idade: %d\n", aluno.idade);
+}
+
+Aluno buscar_aluno_id(Lista_turma turma, int id) {
     Aluno aluno;
     int i;
 
@@ -21,6 +27,31 @@ Aluno buscar_aluno(Lista_turma turma, int id) {
 
     aluno.id = ID_NULO;
     return aluno;
+}
+
+int buscar_aluno_nome(Lista_turma turma, char *nome) {
+    Aluno alunos[MAX_ALUNOS];
+    int i, qtd = 0;
+
+    for(i=0;i<turma.tam_lista;i++){
+        if(strcmp(turma.alunos[i].nome, nome) == 0) {
+            alunos[qtd++] = turma.alunos[i];
+        }
+    }
+
+    if(qtd == 0) return 0;
+
+    if(qtd == 1) {
+        printf("foi encontrado um aluno:\n");
+        print_aluno(alunos[0]);
+    } else {
+        printf("foram encontrados %d alunos:\n", qtd);
+        for(i=0;i<qtd;i++){
+            print_aluno(alunos[i]);
+        }
+    }
+
+    return 1;
 }
 
 int criar_lista_turma(Lista_turma *turma) {
