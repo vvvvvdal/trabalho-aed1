@@ -16,6 +16,7 @@ typedef struct {
 
 typedef struct {
     Aluno alunos[MAX_ALUNOS];
+    char nome_turma[3]; // ex: 1A (primeiro ano turma A), 3B (terceiro ano turma B)
     int tam_lista;
 } Lista_turma; // lista estática
 
