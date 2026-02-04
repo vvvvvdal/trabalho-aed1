@@ -40,7 +40,24 @@ int criar_pilha_historico(Pilha_historico *turma_historico){
     return 1;
 }
 
-Aluno pop_pilha_historico(Pilha_historico *turma_historico);
+Aluno pop_pilha_historico(Pilha_historico *turma_historico) {
+    Aluno pop_aluno;
+
+    if(turma_historico->topo == NULL) {
+        pop_aluno.id = ID_NULO;
+
+        return pop_aluno;
+    }
+
+    Aluno_historico *pop_historico = turma_historico->topo;
+    pop_aluno = pop_historico->dados;
+
+    turma_historico->topo = turma_historico->topo->proximo;
+
+    free(pop_historico);
+
+    return pop_aluno;
+}
 
 int recuperar_historico_aluno(Lista_turma *turma, Pilha_historico *historico) {
     Aluno aluno = pop_pilha_historico(historico);

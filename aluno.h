@@ -26,10 +26,15 @@ typedef struct {
     int fim_fila;
 } Fila_espera; // fila estática
 
-typedef struct {
-    Aluno alunos[MAX_HISTORICO];
+typedef struct Aluno_historico {
+    Aluno dados;
+    struct Aluno_historico *proximo;
+} Aluno_historico; // elemento pra pilha dinamica
+
+typedef struct Aluno{
+    Aluno_historico *topo;
     int tam_pilha;
-} Pilha_historico; // pilha estática
+} Pilha_historico; // pilha dinamica
 
 void limpar_buffer_entrada();
 int verificar_id(int id);
