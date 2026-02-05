@@ -41,22 +41,22 @@ typedef struct Aluno{
     int tam_pilha;
 } Pilha_historico; // pilha dinamica
 
-void limpar_buffer_entrada();
+void limpar_buffer_entrada();//feito
 int verificar_id(int id);
 int verificar_idade(int idade);
 int verificar_nome(char *nome);
-Aluno buscar_aluno_id(Lista_turma turma, int id);
-int buscar_aluno_nome(Lista_turma turma, char *nome);
+Aluno buscar_aluno_id(Lista_turma turma, int id);//feito
+int buscar_aluno_nome(Lista_turma turma, char *nome);//feito
 
 // funções de criar
-void criar_lista_turma(Lista_turma *turma);
-void criar_fila_espera(Fila_espera *turma_espera);
-void criar_pilha_historico(Pilha_historico *turma_historico);
+void criar_lista_turma(Lista_turma *turma);//feito
+void criar_fila_espera(Fila_espera *turma_espera);//feito
+void criar_pilha_historico(Pilha_historico *turma_historico);//feito
 
-Nof *criar_aluno_fila_espera(Fila_espera *turma_espera, Aluno aluno);
+Nof *criar_aluno_fila_espera(Fila_espera *turma_espera, Aluno aluno);//feito
 
 // funções de imprimir
-void print_aluno(Aluno aluno);
+void print_aluno(Aluno aluno);//feito
 void print_lista_turma(Lista_turma turma);
 void print_fila_espera(Fila_espera turma_espera);
 void print_pilha_historico(Pilha_historico turma_historico);
@@ -66,17 +66,17 @@ int push_lista_turma(Lista_turma *turma, Aluno aluno);
 Aluno pop_lista_turma(Lista_turma *turma, int id_aluno);
 
 // fila: inserir (push) e remover (pop)
-int push_fila_espera(Fila_espera *turma_espera, Aluno aluno);
-Aluno pop_fila_espera(Fila_espera *turma_espera);
+int push_fila_espera(Fila_espera *turma_espera, Aluno aluno);//feito
+Aluno pop_fila_espera(Fila_espera *turma_espera);//feito
 
 // pilha: inserir (push) e remover (pop)
 int push_pilha_historico(Pilha_historico *turma_historico, Aluno aluno);
-Aluno pop_pilha_historico(Pilha_historico *turma_historico);
+Aluno pop_pilha_historico(Pilha_historico *turma_historico);//feito
 
 // recuperar o ultimo aluno que foi apagado
-int recuperar_historico_aluno(Lista_turma *turma, Pilha_historico *historico);
+int recuperar_historico_aluno(Lista_turma *turma, Pilha_historico *historico);//terminando
 
 // colocar o primeiro aluno da fila de espera para dentro da turma
-int sair_espera_aluno(Lista_turma *turma, Fila_espera *espera);
+int sair_espera_aluno(Lista_turma *turma, Fila_espera *espera);//terminando
 
 #endif
