@@ -81,7 +81,7 @@ Aluno pop_pilha_historico(Pilha_historico *turma_historico) {
     }
 
     Aluno_historico *pop_historico = turma_historico->topo;
-    pop_aluno = pop_historico->dados;
+    pop_aluno = pop_historico->aluno;
 
     turma_historico->topo = turma_historico->topo->proximo;
 
