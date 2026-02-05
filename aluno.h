@@ -27,13 +27,13 @@ typedef struct {
     int fim_fila;
 } Fila_espera; // fila estática
 
-typedef struct Aluno_historico {
+typedef struct Nop {
     Aluno aluno;
-    struct Aluno_historico *proximo;
-} Aluno_historico; // elemento pra pilha dinamica
+    struct Nop *proximo;
+} Nop; // elemento pra pilha dinamica
 
 typedef struct Aluno{
-    Aluno_historico *topo;
+    Nop *topo;
     int tam_pilha;
 } Pilha_historico; // pilha dinamica
 
