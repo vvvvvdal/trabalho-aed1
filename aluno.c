@@ -54,21 +54,67 @@ int buscar_aluno_nome(Lista_turma turma, char *nome) {
     return 1;
 }
 
-int criar_lista_turma(Lista_turma *turma) {
+void criar_lista_turma(Lista_turma *turma) {
     turma->tam_lista = 0;
-    return 1;
 }
 
-int criar_fila_espera(Fila_espera *turma_espera) {
-    turma_espera->inicio_fila = 0;
+void criar_fila_espera(Fila_espera *turma_espera) {
+    turma_espera->inicio = NULL;
+    turma_espera->fim = NULL;
     turma_espera->tam_fila = 0;
-    turma_espera->fim_fila = 0;
+}
+
+void criar_pilha_historico(Pilha_historico *turma_historico){
+    turma_historico->topo = NULL;
+    turma_historico->tam_pilha = 0;
+}
+
+
+Nof *criar_aluno_fila_espera(Fila_espera *turma_espera, Aluno aluno) {
+    Nof *nof = (Nof*)malloc(1*sizeof(Nof));
+
+    if(nof == NULL) return NULL;
+
+    nof->aluno = aluno;
+    nof->proximo = NULL;
+
+    return nof;
+}
+
+int push_fila_espera(Fila_espera *turma_espera, Aluno aluno) {
+    Nof *nof = criar_aluno_fila_espera(turma_espera, aluno);
+
+    if(nof == NULL) return 0;
+
+    if(turma_espera->inicio == NULL) {
+        turma_espera->inicio = nof;
+        turma_espera->fim = nof;
+    } else {
+        turma_espera->fim->proximo = nof;
+        turma_espera->fim = nof;
+    }
+
+    turma_espera->tam_fila++;
+
     return 1;
 }
 
-int criar_pilha_historico(Pilha_historico *turma_historico){
-    turma_historico->tam_pilha = 0;
-    return 1;
+Aluno pop_fila_espera(Fila_espera *turma_espera) {
+    Aluno res;
+    Nof *aux;
+    if(turma_espera->tam_fila == 0) {
+        res.id = ID_NULO;
+        return res;
+    }
+
+    aux = turma_espera->inicio;
+    turma_espera->inicio = aux->proximo;
+    res = aux->aluno;
+
+    turma_espera->tam_fila--;
+    free(aux);
+
+    return res;
 }
 
 Aluno pop_pilha_historico(Pilha_historico *turma_historico) {

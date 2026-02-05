@@ -49,9 +49,11 @@ Aluno buscar_aluno_id(Lista_turma turma, int id);
 int buscar_aluno_nome(Lista_turma turma, char *nome);
 
 // funções de criar
-int criar_lista_turma(Lista_turma *turma);
-int criar_fila_espera(Fila_espera *turma_espera);
-int criar_pilha_historico(Pilha_historico *turma_historico);
+void criar_lista_turma(Lista_turma *turma);
+void criar_fila_espera(Fila_espera *turma_espera);
+void criar_pilha_historico(Pilha_historico *turma_historico);
+
+Nof *criar_aluno_fila_espera(Fila_espera *turma_espera, Aluno aluno);
 
 // funções de imprimir
 void print_aluno(Aluno aluno);
