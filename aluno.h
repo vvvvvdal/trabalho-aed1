@@ -28,7 +28,7 @@ typedef struct {
 } Fila_espera; // fila estática
 
 typedef struct Aluno_historico {
-    Aluno dados;
+    Aluno aluno;
     struct Aluno_historico *proximo;
 } Aluno_historico; // elemento pra pilha dinamica
 
