@@ -20,12 +20,16 @@ typedef struct {
     int tam_lista;
 } Lista_turma; // lista estática
 
+typedef struct Nof {
+    Aluno aluno;
+    struct Nof *proximo;
+} Nof; // elemento pra fila dinamica
+
 typedef struct {
-    Aluno alunos[MAX_ESPERA];
+    Nof *inicio;
+    Nof *fim;
     int tam_fila;
-    int inicio_fila;
-    int fim_fila;
-} Fila_espera; // fila estática
+} Fila_espera; // fila dinamica
 
 typedef struct Nop {
     Aluno aluno;
@@ -56,7 +60,7 @@ void print_fila_espera(Fila_espera turma_espera);
 void print_pilha_historico(Pilha_historico turma_historico);
 
 // lista: inserir (push) e remover (pop)
-int push_lista_turma(Lista_turma *turma, int id_aluno, int idade_aluno, char *nome_aluno);
+int push_lista_turma(Lista_turma *turma, Aluno aluno);
 Aluno pop_lista_turma(Lista_turma *turma, int id_aluno);
 
 // fila: inserir (push) e remover (pop)
