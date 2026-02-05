@@ -7,13 +7,80 @@ void limpar_buffer_entrada() {
     int c;
     while((c = getchar()) != '\n' && c != EOF);
 }
-
+//PRINTF'S
 void print_aluno(Aluno aluno) {
     printf("nome: %s\n", aluno.nome);
     printf("matricula: %d\n", aluno.id);
     printf("idade: %d\n", aluno.idade);
 }
 
+void print_lista_turma(Lista_turma turma) {
+
+    //tem que ordenar a chamada por ordem alfabetica antes de seguir nessa função
+    printf("\n=====| LISTA DA TURMA %s |=====\n", turma.nome_turma);
+
+    if (turma.tam_lista == 0) {
+        printf("A turma está vazia.\n");
+        return;
+    }
+
+    printf("\nTotal de alunos na turma: %d\n", turma.tam_lista);
+
+    for (int i = 0; i < turma.tam_lista; i++) {
+        printf("\nAluno %d:\n", i + 1);
+        print_aluno(turma.alunos[i]);
+    }
+
+}
+
+void print_fila_espera(Fila_espera turma_espera) {
+
+    //esse n tem que ordenar pq é por ordem de chegada
+    printf("\n=====| FILA DE ESPERA |=====\n");
+
+    if (turma_espera.tam_fila == 0) {
+        printf("Fila de espera vazia.\n");
+        return;
+    }
+
+    Nof *aux = turma_espera.inicio;
+    int pos = 1;
+
+    printf("\nTotal de alunos na fila: %d\n", turma_espera.tam_fila);
+    while (aux != NULL) {
+        printf("\nAluno na posição %d da fila:\n", pos);
+        print_aluno(aux->aluno);
+
+        aux = aux->proximo;
+        pos++;
+    }
+
+}
+
+void print_pilha_historico(Pilha_historico turma_historico) {
+
+    //tbm n tem que ordenar
+    printf("\n=====| HISTÓRICO DE ALUNOS |=====\n");
+
+    if (turma_historico.tam_pilha == 0) {
+        printf("Histórico vazio.\n");
+        return;
+    }
+
+    Nop *aux = turma_historico.topo;
+    int pos = 1;
+
+    printf("\nTotal de alunos no histórico: %d\n", turma_historico.tam_pilha);
+    while (aux != NULL) {
+        printf("\nAluno no topo %d:\n", pos);
+        print_aluno(aux->aluno);
+
+        aux = aux->proximo;
+        pos++;
+    }
+
+}
+//BUSCA
 Aluno buscar_aluno_id(Lista_turma turma, int id) {
     Aluno aluno;
     int i;
@@ -53,7 +120,7 @@ int buscar_aluno_nome(Lista_turma turma, char *nome) {
 
     return 1;
 }
-
+//CRIAÇÃO
 void criar_lista_turma(Lista_turma *turma) {
     turma->tam_lista = 0;
 }
@@ -80,7 +147,7 @@ Nof *criar_aluno_fila_espera(Fila_espera *turma_espera, Aluno aluno) {
 
     return nof;
 }
-
+//PUSH'S E POP'S
 int push_fila_espera(Fila_espera *turma_espera, Aluno aluno) {
     Nof *nof = criar_aluno_fila_espera(turma_espera, aluno);
 
@@ -117,6 +184,55 @@ Aluno pop_fila_espera(Fila_espera *turma_espera) {
     return res;
 }
 
+int push_lista_turma(Lista_turma *turma, Aluno aluno) {
+
+    if (turma->tam_lista == MAX_ALUNOS) return 0;
+
+    turma->alunos[turma->tam_lista] = aluno;
+    turma->tam_lista++;
+
+    return 1; 
+}
+
+Aluno pop_lista_turma(Lista_turma *turma, int id_aluno) { //conferir essa
+
+    Aluno removido;
+    removido.id = -1;
+
+    if (turma->tam_lista == 0) return removido;
+
+    for (int i = 0; i < turma->tam_lista; i++) {
+
+        if (turma->alunos[i].id == id_aluno) {
+
+            removido = turma->alunos[i];
+
+            for (int j = i; j < turma->tam_lista - 1; j++) turma->alunos[j] = turma->alunos[j + 1];
+
+            turma->tam_lista--;
+
+            return removido;
+        }
+    }
+
+    return removido;
+}
+
+int push_pilha_historico(Pilha_historico *turma_historico, Aluno aluno) {
+
+    Nop *novo = (Nop*) malloc(sizeof(Nop));
+
+    if (novo == NULL) return 0;
+
+    novo->aluno = aluno;
+    novo->proximo = turma_historico->topo;
+    turma_historico->topo = novo;
+
+    turma_historico->tam_pilha++;
+
+    return 1;
+}
+
 Aluno pop_pilha_historico(Pilha_historico *turma_historico) {
     Aluno pop_aluno;
 
@@ -136,29 +252,28 @@ Aluno pop_pilha_historico(Pilha_historico *turma_historico) {
     return pop_aluno;
 }
 
-int recuperar_historico_aluno(Lista_turma *turma, Pilha_historico *historico) {
+int recuperar_historico_aluno(Lista_turma *turma, Pilha_historico *historico) { //conferir
+
+    if (historico->tam_pilha == 0) return 0;
+    if (turma->tam_lista == MAX_ALUNOS) return 2;
+
     Aluno aluno = pop_pilha_historico(historico);
-    turma->alunos[turma->tam_lista++] = aluno;
 
-    // if(historico->tam_pilha == 0) return 0; // historico vazio. deixando de comentário para lembrar de fazer a verificação do tamanho
-    //                                                             antes de executar essa função de recuperar
+    turma->alunos[turma->tam_lista] = aluno;
+    turma->tam_lista++;
 
-    // if(turma->tam_lista == MAX_ALUNOS) return 2; // turma cheia. deixando de comentário para lembrar de fazer a verificação do tamanho
-    //                                                              antes de executar essa função de recuperar
-
-
-    return 1; // aluno recuperado
+    return 1;
 }
 
-int sair_espera_aluno(Lista_turma *turma, Fila_espera *espera) {
+
+int sair_espera_aluno(Lista_turma *turma, Fila_espera *espera) { //conferir
+    if (espera->tam_fila == 0) return 0;
+    if (turma->tam_lista == MAX_ALUNOS) return 2;
+
     Aluno aluno = pop_fila_espera(espera);
-    turma->alunos[turma->tam_lista++] = aluno;
 
-        // if(espera->tam_fila == 0) return 0; // lista de espera vazia. deixando de comentário para lembrar de fazer a verificação do tamanho
-    //                                                             antes de executar essa função de espera
+    turma->alunos[turma->tam_lista] = aluno;
+    turma->tam_lista++;
 
-    // if(turma->tam_lista == MAX_ALUNOS) return 2; // turma cheia. deixando de comentário para lembrar de fazer a verificação do tamanho
-    //                                                              antes de executar essa função de espera
-
-    return 1; // aluno enviado para a turma
+    return 1; 
 }
