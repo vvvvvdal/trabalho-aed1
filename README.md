@@ -1,1 +1,1 @@
-# Sistema Gerenciador de Turmas
+# Sistema Gerenciador de Alunos
