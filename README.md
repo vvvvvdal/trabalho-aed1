@@ -18,5 +18,5 @@ O projeto utiliza três conceitos fundamentais de AED:
 
 ## 💻 Como Compilar e Executar
 ```bash
-gcc main.c aluno.c -o sistema
+gcc *.c -o sistema
 ./sistema
