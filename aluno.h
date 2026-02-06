@@ -79,4 +79,10 @@ int recuperar_historico_aluno(Lista_turma *turma, Pilha_historico *historico);//
 // colocar o primeiro aluno da fila de espera para dentro da turma
 int sair_espera_aluno(Lista_turma *turma, Fila_espera *espera);//feito
 
+// ordenar o nome dos alunos alfabeticamente
+void ordenar_turma_alfabetica(Lista_turma *turma);//feito
+
+// verifica se há mais de um ID identico
+int verificar_id_duplicado(Lista_turma turma, int id);//feito
+
 #endif

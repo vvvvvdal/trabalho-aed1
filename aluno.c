@@ -3,6 +3,30 @@
 #include <string.h>
 #include "aluno.h"
 
+void ordenar_turma_alfabetica(Lista_turma *turma) {
+    int i, j;
+    Aluno aux;
+
+    for (i = 0; i < turma->tam_lista - 1; i++) {
+        for (j = 0; j < turma->tam_lista - i - 1; j++) {
+            if (strcmp(turma->alunos[j].nome, turma->alunos[j + 1].nome) > 0) {
+                aux = turma->alunos[j];
+                turma->alunos[j] = turma->alunos[j + 1];
+                turma->alunos[j + 1] = aux;
+            }
+        }
+    }
+}
+
+int verificar_id_duplicado(Lista_turma turma, int id) {
+    for (int i = 0; i < turma.tam_lista; i++) {
+        if (turma.alunos[i].id == id) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 void limpar_buffer_entrada() {
     int c;
     while((c = getchar()) != '\n' && c != EOF);
