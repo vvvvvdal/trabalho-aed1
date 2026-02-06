@@ -13,6 +13,7 @@ O projeto utiliza três conceitos fundamentais de AED:
 
 ## 🚀 Funcionalidades
 - Cadastro de alunos (ID, Nome, Idade, Média Global).
+- Arquivo de banco de dados com as informações dos alunos.
 - Busca de alunos por ID ou Nome.
 - Ordenação dos alunos por ordem alfabética
 - Cálculo da média geral da turma (média aritmética da nota de todos os alunos da turma);
