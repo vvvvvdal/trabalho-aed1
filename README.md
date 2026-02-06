@@ -1,4 +1,4 @@
-# Sistema de Gerenciamento de Turmas (AED 1)
+# Sistema de Gerenciamento de Turmas
 
 Sistema desenvolvido em **C** para a disciplina de Algoritmos e Estruturas de Dados 1. O objetivo é gerenciar alunos de uma escola utilizando diferentes estruturas de dados para otimizar o fluxo de matrículas.
 
