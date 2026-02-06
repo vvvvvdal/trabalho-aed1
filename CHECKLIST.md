@@ -23,6 +23,7 @@
 - [x] Imprimir histórico (pilha)
 
 ## ⏳ Pendências (O que falta fazer)
+- [ ] **Criação de aluno:** Quando criar um aluno, colocar a validez dele como VALIDA. ex: ```aluno.valido = VALIDO;```.
 - [ ] **Menu Principal (main.c):** Interface via terminal para o usuário escolher as opções.
 - [ ] **Ordenação Alfabética:** Implementar um `Bubble Sort` ou `Quick Sort` na Lista Estática antes de imprimir a turma.
 - [ ] **Persistência de Dados (Opcional):** Salvar e ler os dados em arquivo `.txt` ou `.dat`. 
