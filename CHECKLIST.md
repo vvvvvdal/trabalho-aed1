@@ -26,5 +26,7 @@
 - [ ] **Menu Principal (main.c):** Interface via terminal para o usuário escolher as opções.
 - [ ] **Ordenação Alfabética:** Implementar um `Bubble Sort` ou `Quick Sort` na Lista Estática antes de imprimir a turma.
 - [ ] **Persistência de Dados (Opcional):** Salvar e ler os dados em arquivo `.txt` ou `.dat`. 
-- [ ] **Validações:** Impedir IDs duplicados no cadastro.
+- [ ] **Validações:** Impedir IDs duplicados no cadastro, idade mínima e máxima (idade mínima de 15 e máxima de 23), impedir números e caractéres especiais no nome, letras e caractéres especiais no ID, letras e caractéres especiais na idade.
 - [ ] **Cálculo de Médias:** Função para calcular a média global da turma.
+- [ ] **Mudança na Estrutura da Fila de Espera:** Cada série (conjunto de turmas) vai ter sua fila de espera. Ex: 1º ano, com turmas A e B, vai ter uma fila de espera. O preenchimento será na turma A e depois na turma B.
+- [ ] **Sistema de ID:** O ID não será digitado pelo usuário mais. O ID será criado sendo a vez que o aluno foi cadastrado na escola. Ex: primeiro aluno -> ID: 00001. décimo segundo aluno -> 00012.
