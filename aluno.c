@@ -8,7 +8,7 @@ void limpar_buffer_entrada() {
     while((c = getchar()) != '\n' && c != EOF);
 }
 
-// VERIFICAR/ORDENAR
+// funções de verificar/buscar/ordenar
 int verificar_id(Lista_turma turma, int id) {
     for (int i = 0; i < turma.tam_lista; i++) {
         if (turma.alunos[i].id == id) {
@@ -81,7 +81,7 @@ void ordenar_turma_alfabetica(Lista_turma *turma) {
     }
 }
 
-// INICIALIZAR/CRIAR
+// funções de criar/inicializar
 void criar_lista_turma(Lista_turma *turma) {
     turma->tam_lista = 0;
 }
@@ -131,88 +131,14 @@ void inicializar_sistema(Serie *serie, Pilha_historico *turma_historico) {
     }
 }
 
-//PRINTF'S
-void print_aluno(Aluno aluno) {
-    printf("nome: %s\n", aluno.nome);
-    printf("matricula: %d\n", aluno.id);
-    printf("idade: %d\n", aluno.idade);
-}
-
-void print_lista_turma(Lista_turma turma) {
-    
-    //tem que ordenar a chamada por ordem alfabetica antes de seguir nessa função
-    printf("\n=====| LISTA DA TURMA %s |=====\n", turma.nome_turma);
-
-    if (turma.tam_lista == 0) {
-        printf("A turma está vazia.\n");
-        return;
-    }
-
-    printf("\nTotal de alunos na turma: %d\n", turma.tam_lista);
-
-    for (int i = 0; i < turma.tam_lista; i++) {
-        printf("\nAluno %d:\n", i + 1);
-        print_aluno(turma.alunos[i]);
-    }
-
-}
-
-void print_fila_espera(Fila_espera turma_espera) {
-
-    //esse n tem que ordenar pq é por ordem de chegada
-    printf("\n=====| FILA DE ESPERA |=====\n");
-
-    if (turma_espera.tam_fila == 0) {
-        printf("Fila de espera vazia.\n");
-        return;
-    }
-
-    Nof *aux = turma_espera.inicio;
-    int pos = 1;
-
-    printf("\nTotal de alunos na fila: %d\n", turma_espera.tam_fila);
-    while (aux != NULL) {
-        printf("\nAluno na posição %d da fila:\n", pos);
-        print_aluno(aux->aluno);
-
-        aux = aux->proximo;
-        pos++;
-    }
-
-}
-
-void print_pilha_historico(Pilha_historico turma_historico) {
-
-    //tbm n tem que ordenar
-    printf("\n=====| HISTÓRICO DE ALUNOS |=====\n");
-
-    if (turma_historico.tam_pilha == 0) {
-        printf("Histórico vazio.\n");
-        return;
-    }
-
-    Nop *aux = turma_historico.topo;
-    int pos = 1;
-
-    printf("\nTotal de alunos no histórico: %d\n", turma_historico.tam_pilha);
-    while (aux != NULL) {
-        printf("\nAluno no topo %d:\n", pos);
-        print_aluno(aux->aluno);
-
-        aux = aux->proximo;
-        pos++;
-    }
-
-}
-
-//PUSH'S E POP'S
-
+// lista, fila, pilha: inserir (push) e remover (pop)
 int push_lista_turma(Lista_turma *turma, Aluno aluno) {
 
     if (turma->tam_lista == MAX_ALUNOS) return 0;
 
     turma->alunos[turma->tam_lista] = aluno;
     turma->tam_lista++;
+    ordenar_turma_alfabetica(turma);
 
     return 1; 
 }
@@ -311,6 +237,7 @@ Aluno pop_pilha_historico(Pilha_historico *turma_historico) {
     return pop_aluno;
 }
 
+// recuperar o ultimo aluno que foi apagado
 int recuperar_historico_aluno(Lista_turma *turma, Pilha_historico *historico) { //conferir
 
     if (historico->tam_pilha == 0) return 0;
@@ -324,7 +251,7 @@ int recuperar_historico_aluno(Lista_turma *turma, Pilha_historico *historico) { 
     return 1;
 }
 
-
+// colocar o primeiro aluno da fila de espera para dentro da turma
 int sair_espera_aluno(Lista_turma *turma, Fila_espera *espera) { //conferir
     if (espera->tam_fila == 0) return 0;
     if (turma->tam_lista == MAX_ALUNOS) return 2;
@@ -335,4 +262,75 @@ int sair_espera_aluno(Lista_turma *turma, Fila_espera *espera) { //conferir
     turma->tam_lista++;
 
     return 1; 
+}
+
+// funções de imprimir
+void print_aluno(Aluno aluno) {
+    printf("nome: %s\n", aluno.nome);
+    printf("matricula: %d\n", aluno.id);
+    printf("idade: %d\n", aluno.idade);
+    printf("nota: %.2lf\n", aluno.nota);
+}
+
+void print_lista_turma(Lista_turma turma) {
+    printf("\n=====| LISTA DA TURMA %s |=====\n", turma.nome_turma);
+
+    if (turma.tam_lista == 0) {
+        printf("A turma está vazia.\n");
+        return;
+    }
+
+    printf("\nTotal de alunos na turma: %d\n", turma.tam_lista);
+
+    for (int i = 0; i < turma.tam_lista; i++) {
+        printf("\nAluno %d:\n", i + 1);
+        print_aluno(turma.alunos[i]);
+    }
+
+}
+
+void print_fila_espera(Fila_espera turma_espera) {
+    printf("\n=====| FILA DE ESPERA |=====\n");
+
+    if (turma_espera.tam_fila == 0) {
+        printf("Fila de espera vazia.\n");
+        return;
+    }
+
+    Nof *aux = turma_espera.inicio;
+    int pos = 1;
+
+    printf("\nTotal de alunos na fila: %d\n", turma_espera.tam_fila);
+    while (aux != NULL) {
+        printf("\nAluno na posição %d da fila:\n", pos);
+        print_aluno(aux->aluno);
+
+        aux = aux->proximo;
+        pos++;
+    }
+
+}
+
+void print_pilha_historico(Pilha_historico turma_historico) {
+
+    //tbm n tem que ordenar
+    printf("\n=====| HISTÓRICO DE ALUNOS |=====\n");
+
+    if (turma_historico.tam_pilha == 0) {
+        printf("Histórico vazio.\n");
+        return;
+    }
+
+    Nop *aux = turma_historico.topo;
+    int pos = 1;
+
+    printf("\nTotal de alunos no histórico: %d\n", turma_historico.tam_pilha);
+    while (aux != NULL) {
+        printf("\nAluno no topo %d:\n", pos);
+        print_aluno(aux->aluno);
+
+        aux = aux->proximo;
+        pos++;
+    }
+
 }

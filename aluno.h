@@ -65,24 +65,13 @@ void criar_lista_turma(Lista_turma *turma); //feito
 void criar_fila_espera(Fila_espera *turma_espera); //feito
 void criar_pilha_historico(Pilha_historico *turma_historico); //feito
 void inicializar_sistema(Serie *serie, Pilha_historico *turma_historico);
-
 Nof *criar_aluno_fila_espera(Fila_espera *turma_espera, Aluno aluno); //feito
 
-// funções de imprimir
-void print_aluno(Aluno aluno); //feito
-void print_lista_turma(Lista_turma turma); //feito
-void print_fila_espera(Fila_espera turma_espera); //feito
-void print_pilha_historico(Pilha_historico turma_historico); //feito
-
-// lista: inserir (push) e remover (pop)
+// lista, fila, pilha: inserir (push) e remover (pop)
 int push_lista_turma(Lista_turma *turma, Aluno aluno); //feito
 Aluno pop_lista_turma(Lista_turma *turma, int id_aluno); //feito
-
-// fila: inserir (push) e remover (pop)
 int push_fila_espera(Fila_espera *turma_espera, Aluno aluno); //feito
 Aluno pop_fila_espera(Fila_espera *turma_espera); //feito
-
-// pilha: inserir (push) e remover (pop)
 int push_pilha_historico(Pilha_historico *turma_historico, Aluno aluno); //feito
 Aluno pop_pilha_historico(Pilha_historico *turma_historico); //feito
 
@@ -91,5 +80,11 @@ int recuperar_historico_aluno(Lista_turma *turma, Pilha_historico *historico); /
 
 // colocar o primeiro aluno da fila de espera para dentro da turma
 int sair_espera_aluno(Lista_turma *turma, Fila_espera *espera); //feito
+
+// funções de imprimir
+void print_aluno(Aluno aluno); //feito
+void print_lista_turma(Lista_turma turma); //feito
+void print_fila_espera(Fila_espera turma_espera); //feito
+void print_pilha_historico(Pilha_historico turma_historico); //feito
 
 #endif
