@@ -7,9 +7,10 @@
 int main() {
     Serie serie[3]; // primeira série, segunda série e terceira série. ambas com turmas A e B.
     Pilha_historico historico;
-    Aluno novo;
+    Aluno aluno_novo, aluno_buscar, aluno_remover;
     int total_id = 0, opcao = -1, num_serie, id_busca;
-    char nome_turma[NOME_TURMA];
+    char nome_turma[TAM_NOME_TURMA];
+
     inicializar_sistema(serie, &historico);
 
     while(1){
@@ -20,60 +21,49 @@ int main() {
                 escolher_turma(nome_turma);
                 num_serie = nome_turma[0] - '0';  
 
-                novo.id = ++total_id;
-                novo.valido = VALIDO;
+                aluno_novo.id = ++total_id, aluno_novo.valido = VALIDO;
                 
-                ler_nome(novo.nome);
-                ler_idade(&novo.idade); 
-                ler_nota(&novo.nota);
+                ler_nome(aluno_novo.nome), ler_idade(&aluno_novo.idade), ler_nota(&aluno_novo.nota);
 
-                if(push_lista_turma(serie, nome_turma, novo) == 1) {
+                if(push_lista_turma(serie, nome_turma, aluno_novo) == 1) {
                     printf("\nTem vaga na turma %s. Aluno de ID %04d inserido com sucesso.\n\n", nome_turma, total_id);
                 } else {
-                    nome_turma[1] = 'B';
-                    nome_turma[2] = '\0';
+                    nome_turma[1] = 'B', nome_turma[2] = '\0';
 
-                    if(push_lista_turma(serie, nome_turma, novo) == 1) printf("\nA turma %dA esta cheia. Aluno de ID %04d inserido na turma %s.\n\n", num_serie, total_id, nome_turma);
+                    if(push_lista_turma(serie, nome_turma, aluno_novo) == 1) printf("\nA turma %dA esta cheia. Aluno de ID %04d inserido na turma %s.\n\n", num_serie, total_id, nome_turma);
                     else {
                         printf("\nAs turmas %dA e %dB estao cheias. Tentando colocar na fila de espera...\n", num_serie, num_serie);
-                        if(push_fila_espera(serie, num_serie, novo) == 1) printf("\nAluno de ID %04d inserido na fila de espera da serie %d.\n\n", total_id, num_serie);
+                        if(push_fila_espera(serie, num_serie, aluno_novo) == 1) printf("\nAluno de ID %04d inserido na fila de espera da serie %d.\n\n", total_id, num_serie);
                         else printf("\nErro ao alocar memoria\n\n");
                     }
-                } 
-
+                }
+                
                 break;
             }
             case 2: {
                 escolher_turma(nome_turma);
-                print_turma_escolhida(serie, nome_turma);
+                print_lista_turma(serie, nome_turma);
 
                 break;
             }
             case 3: {
                 num_serie = escolher_serie(serie);
-                novo.id = ++total_id;
-                novo.valido = VALIDO;
+                aluno_novo.id = ++total_id, aluno_novo.valido = VALIDO;
                 
-                ler_nome(novo.nome);
-                ler_idade(&novo.idade);
-                ler_nota(&novo.nota);
+                ler_nome(aluno_novo.nome), ler_idade(&aluno_novo.idade), ler_nota(&aluno_novo.nota);
 
-                nome_turma[0] = num_serie + '0';
-                nome_turma[1] = 'A';
-                nome_turma[2] = '\0';
+                nome_turma[0] = num_serie + '0', nome_turma[1] = 'A', nome_turma[2] = '\0';
 
-                if(push_lista_turma(serie, nome_turma, novo) == 1) {
+                if(push_lista_turma(serie, nome_turma, aluno_novo) == 1) {
                     printf("\nTem vaga na turma %s. Aluno de ID %04d inserido com sucesso.\n\n", nome_turma, total_id);
                 } else {
-                    nome_turma[0] = num_serie + '0';
-                    nome_turma[1] = 'B';
-                    nome_turma[2] = '\0';
+                    nome_turma[1] = 'B', nome_turma[2] = '\0';
 
-                    if(push_lista_turma(serie, nome_turma, novo) == 1) printf("\nA turma %dA esta cheia. Aluno de ID %04d inserido na turma %s.\n\n", num_serie, total_id, nome_turma);
+                    if(push_lista_turma(serie, nome_turma, aluno_novo) == 1) printf("\nA turma %dA esta cheia. Aluno de ID %04d inserido na turma %s.\n\n", num_serie, total_id, nome_turma);
                     else {
                         printf("\nAs turmas %dA e %dB estao cheias. Tentando colocar na fila de espera...\n", num_serie, num_serie);
-                        if(push_fila_espera(serie, num_serie, novo) == 1) printf("\nAluno de ID %04d inserido na fila de espera da serie %d.\n\n", total_id, num_serie);
-                        else printf("\nErro ao alocar memoria\n\n");
+                        if(push_fila_espera(serie, num_serie, aluno_novo) == 1) printf("Aluno de ID %04d inserido na fila de espera da serie %d.\n\n", total_id, num_serie);
+                        else printf("Erro ao alocar memoria\n\n");
                     }
                 }
 
@@ -90,9 +80,9 @@ int main() {
                 scanf("%d", &id_busca);
                 limpar_buffer_entrada();
 
-                Aluno buscar = buscar_aluno_series(serie, id_busca);
-                if(buscar.valido == INVALIDO) printf("\nAluno não encontrado nas series.\n\n");
-                else print_aluno(buscar);
+                aluno_buscar = buscar_aluno_series_id(serie, id_busca);
+                if(aluno_buscar.valido == INVALIDO) printf("\n\nAluno não encontrado nas series.\n\n");
+                else print_aluno(aluno_buscar);
 
                 break;
             }
@@ -109,13 +99,13 @@ int main() {
                 scanf("%d", &id_busca);
                 limpar_buffer_entrada();
 
-                Aluno removido = pop_series(serie, id_busca);
-                if(removido.valido == INVALIDO) printf("\nAluno nao encontrado nas series.\n\n");
+                Aluno aluno_remover = pop_aluno_por_id(serie, id_busca);
+                if(aluno_remover.valido == INVALIDO) printf("\nAluno nao encontrado nas series.\n\n");
                 else {
-                    push_pilha_historico(&historico, removido);
+                    push_pilha_historico(&historico, aluno_remover);
                     printf("\n");
-                    print_aluno(removido);
-                    printf("\nAluno de ID %d movido para o historico de alunos apagados.\n\n", removido.id);
+                    print_aluno(aluno_remover);
+                    printf("Aluno de ID %d movido para o historico de alunos apagados.\n\n", aluno_remover.id);
                 }
 
                 break;
