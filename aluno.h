@@ -49,6 +49,10 @@ typedef struct {
     Fila_espera serie_espera;
 } Serie; // duas turmas (A e B) e uma fila de espera
 
+// funçoes de salvar/carregar
+void salvar_sistema(Serie *serie, Pilha_historico *historico, int total_id, const char *nomeArquivo);
+int carregar_sistema(Serie *serie, Pilha_historico *historico, const char *nomeArquivo);
+
 // funções auxiliares
 void limpar_buffer_entrada();
 void escolher_turma(char *opcao);
@@ -93,9 +97,6 @@ Aluno pop_fila_espera(Serie *serie, int num_turma);
 
 int push_pilha_historico(Pilha_historico *turma_historico, Aluno aluno);
 Aluno pop_pilha_historico(Pilha_historico *turma_historico);
-
-// colocar o primeiro aluno da fila de espera para dentro da turma
-int sair_espera_aluno(Serie *serie, char *nome_turma);
 
 // funções de imprimir
 void print_aluno(Aluno aluno);

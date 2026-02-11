@@ -4,6 +4,92 @@
 #include <ctype.h>
 #include "aluno.h"
 
+// funçoes de salvar/carregar
+void salvar_sistema(Serie *serie, Pilha_historico *historico, int total_id, const char *nomeArquivo) {
+    int i, j;
+    FILE *arquivo = fopen(nomeArquivo, "wb"); 
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para salvar.\n");
+        return;
+    }
+
+    //n repetir id
+    fwrite(&total_id, sizeof(int), 1, arquivo);
+
+    //turmas
+    for (i=0;i<3;i++) {
+        for (j=0;j<2;j++) {
+            fwrite(&serie[i].turmas[j], sizeof(Lista_turma), 1, arquivo);
+        }
+    }
+
+    //fila de espera
+    for (i=0;i<3;i++) {
+        //quantos alunos tem na fila
+        fwrite(&serie[i].serie_espera.tam_fila, sizeof(int), 1, arquivo);
+        
+        Nof *aux = serie[i].serie_espera.inicio;
+        while (aux != NULL) {
+            fwrite(&aux->aluno, sizeof(Aluno), 1, arquivo);
+            aux = aux->proximo;
+        }
+    }
+
+    //historico
+    fwrite(&historico->tam_pilha, sizeof(int), 1, arquivo);
+    Nop *auxP = historico->topo;
+    while (auxP != NULL) {
+        fwrite(&auxP->aluno, sizeof(Aluno), 1, arquivo);
+        auxP = auxP->proximo;
+    }
+
+    fclose(arquivo);
+    printf("Dados salvos com sucesso em '%s'.\n\n", nomeArquivo);
+}
+
+int carregar_sistema(Serie *serie, Pilha_historico *historico, const char *nomeArquivo) {
+    int i, j, k, total_id, tam_espera, tam_historico;
+
+    FILE *arquivo = fopen(nomeArquivo, "rb"); 
+    if (arquivo == NULL) {
+        printf("Arquivo '%s' nao encontrado. Iniciando novo sistema...\n", nomeArquivo);
+        return 0; 
+    }
+
+    if (fread(&total_id, sizeof(int), 1, arquivo) != 1) total_id = 0;
+
+    //turmas
+    for (i=0;i<3;i++) {
+        for (j=0;j<2;j++) fread(&serie[i].turmas[j], sizeof(Lista_turma), 1, arquivo);
+    }
+
+    //fila de espera
+    for (i=0;i<3;i++) {
+        fread(&tam_espera, sizeof(int), 1, arquivo);
+        for (k=0;k<tam_espera;k++) {
+            Aluno temp;
+            fread(&temp, sizeof(Aluno), 1, arquivo);
+            push_fila_espera(serie, i + 1, temp);
+        }
+    }
+
+    //historico
+    fread(&tam_historico, sizeof(int), 1, arquivo);
+    
+    if (tam_historico > 0) {
+        Aluno *aluno_aux = (Aluno*)malloc(sizeof(Aluno) * tam_historico);
+
+        for (k=0;k<tam_historico;k++) fread(&aluno_aux[k], sizeof(Aluno), 1, arquivo);
+        for (k=tam_historico-1;k>=0;k--) push_pilha_historico(historico, aluno_aux[k]);
+
+        free(aluno_aux);
+    }
+
+    fclose(arquivo);
+    printf("Dados carregados com sucesso de '%s'.\n", nomeArquivo);
+    return total_id;
+}
+
 // funções auxiliares
 void limpar_buffer_entrada() {
     int c;
@@ -394,24 +480,9 @@ Aluno pop_pilha_historico(Pilha_historico *turma_historico) {
     turma_historico->topo = turma_historico->topo->proximo;
 
     free(pop_historico);
+    turma_historico->tam_pilha--;
 
     return pop_aluno;
-}
-
-// colocar o primeiro aluno da fila de espera para dentro da turma
-int sair_espera_aluno(Serie *serie, char *nome_turma) {
-    Fila_espera *espera = descobrir_fila_por_numero(serie, (nome_turma[1]-'0'));
-    Lista_turma *turma = descobrir_turma_por_nome(serie, nome_turma);
-
-    if (espera->tam_fila == 0) return 0;
-    if (turma->tam_lista == MAX_ALUNOS) return 2;
-
-    Aluno aluno = pop_fila_espera(serie, (nome_turma[1]-'0'));
-
-    turma->alunos[turma->tam_lista] = aluno;
-    turma->tam_lista++;
-
-    return 1; 
 }
 
 // funções de imprimir
@@ -497,5 +568,5 @@ void limpar_tudo(Serie *serie, Pilha_historico *historico) {
 
     while(historico->tam_pilha > 0) pop_pilha_historico(historico);
 
-    printf("Memoria limpa com sucesso.\n");
+    printf("Memoria limpa com sucesso. Encerrando sistema...\n");
 }
