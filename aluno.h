@@ -49,10 +49,6 @@ typedef struct {
     Fila_espera serie_espera;
 } Serie; // duas turmas (A e B) e uma fila de espera
 
-// salvar dados
-void salvar_sistema(Serie *serie, Pilha_historico *historico, int total_id, const char *nomeArquivo);
-int carregar_sistema(Serie *serie, Pilha_historico *historico, const char *nomeArquivo);
-
 // funções auxiliares
 void limpar_buffer_entrada();
 void escolher_turma(char *opcao);
