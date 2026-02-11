@@ -28,9 +28,12 @@ int main() {
                 if(push_lista_turma(serie, nome_turma, aluno_novo) == 1) {
                     printf("\nTem vaga na turma %s. Aluno de ID %04d inserido com sucesso.\n\n", nome_turma, total_id);
                 } else {
-                    nome_turma[1] = 'B', nome_turma[2] = '\0';
+                    char turma_lotada = nome_turma[1];
+                    if(nome_turma[1] == 'A') nome_turma[1] = 'B';
+                    else nome_turma[1] = 'A';
+                    nome_turma[2] = '\0';
 
-                    if(push_lista_turma(serie, nome_turma, aluno_novo) == 1) printf("\nA turma %dA esta cheia. Aluno de ID %04d inserido na turma %s.\n\n", num_serie, total_id, nome_turma);
+                    if(push_lista_turma(serie, nome_turma, aluno_novo) == 1) printf("\nA turma %d%c esta cheia. Aluno de ID %04d inserido na turma %s.\n\n", num_serie, turma_lotada, total_id, nome_turma);
                     else {
                         printf("\nAs turmas %dA e %dB estao cheias. Tentando colocar na fila de espera...\n", num_serie, num_serie);
                         if(push_fila_espera(serie, num_serie, aluno_novo) == 1) printf("\nAluno de ID %04d inserido na fila de espera da serie %d.\n\n", total_id, num_serie);

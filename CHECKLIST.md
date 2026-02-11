@@ -24,8 +24,8 @@
 ## ⏳ Pendências (O que falta fazer)
 - [x] **Criação de aluno:** Quando criar um aluno, colocar a validez dele como VALIDA. ex: ```aluno.valido = VALIDO;```. Ordenar a turma sempre que adicionar um aluno novo nela.
 - [x] **Menu Principal (main.c):** Interface via terminal para o usuário escolher as opções.
-- [x] **Ordenação Alfabética:** Implementar um `Bubble Sort` ou `Quick Sort` na Lista Estática antes de imprimir a turma.
-- [ ] **Persistência de Dados :** Salvar e ler os dados em arquivo `.txt` ou `.dat`. Salvar os dados antes de encerrar o programa.
+- [x] **Ordenação Alfabética:** Implementar um `Bubble Sort` ou `Quick Sort` na Lista stática antes de imprimir a turma.
+- [ ] **Persistência de Dados :** Salvar e ler os dados em arquivo `.txt` ou `.dat`. Salvar os dados antes de encerrar o programa. O programa tem que salvar o último id_total.
 - [x] **Validações:** Usar recursividade nas funções de validação. Idade mínima e máxima (idade mínima de 15 e máxima de 23), impedir números e caractéres especiais no nome, letras e caractéres especiais no ID, letras e caractéres especiais na idade.
 - [x] **Cálculo de Médias:** Função para calcular a média global da turma.
 - [x] **Mudança na Estrutura da Fila de Espera:** Cada série (conjunto de turmas) vai ter sua fila de espera. Ex: 1º ano, com turmas A e B, vai ter uma fila de espera. O preenchimento será na turma A e depois na turma B.

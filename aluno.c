@@ -15,7 +15,7 @@ void escolher_turma(char *nome_turma) {
 
     while(1) {
         printf("Digite qual turma voce quer (ex: 1B): ");
-        scanf(" %9[^\n]%*c", nome_turma);
+        scanf(" %4[^\n]%*c", nome_turma);
 
         nome_turma[1] = toupper(nome_turma[1]);
 
@@ -126,8 +126,8 @@ int exibir_menu(int opcao) {
     printf("5. Buscar aluno por ID\n");
     printf("6. Buscar aluno por nome\n");
     printf("7. Remover aluno por ID\n");
-    printf("8. Ver historico de alunos aluno_removers\n");
-    printf("0. Sair\n");
+    printf("8. Ver historico de alunos removidos\n");
+    printf("0. Salvar dados no arquivo e Sair\n");
     printf("Digite sua opcao: ");
     scanf("%d", &opcao);
     limpar_buffer_entrada();
@@ -312,11 +312,11 @@ Aluno pop_aluno_por_id(Serie *serie, int id) {
             
             if (aluno_remover.valido == VALIDO) {
                 if (serie[i].serie_espera.tam_fila > 0) {
-                    Aluno espera = pop_fila_espera(serie, (nome_turma[0]-'0'));
+                    Aluno aluno_espera = pop_fila_espera(serie, (nome_turma[0]-'0'));
                     
-                    if (push_lista_turma(serie, nome_turma, espera))
+                    if (push_lista_turma(serie, nome_turma, aluno_espera))
                         printf("\nVaga aberta na turma %s. Aluno de ID %d movido da fila de espera para a turma.\n",
-                        nome_turma, espera.id);
+                        nome_turma, aluno_espera.id);
                 }
                 return aluno_remover; 
             }
